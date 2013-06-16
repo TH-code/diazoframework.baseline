@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules xmlns="http://namespaces.plone.org/diazo"
+         xmlns:css="http://namespaces.plone.org/diazo/css"
+         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+         xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <!-- Columns -->
+  <replace content="//*[@id='visual-portal-wrapper']">
+      <div id="page">
+          <xsl:apply-templates select="./*"/>
+      </div>      
+  </replace>
+  <replace content="//*[contains(@class, 'row')]">
+      <div class="width4">
+          <xsl:for-each select="./div">
+              <div>
+                  <xsl:choose>
+                      <xsl:when test="contains(concat(' ', normalize-space(@class), ' '), ' width-1:4 ')">
+                          <xsl:attribute name="class"><xsl:if test="position() = 1">first </xsl:if>column width1<xsl:if test="starts-with(@id, 'portal-column-')"> stroke</xsl:if></xsl:attribute>
+                      </xsl:when>
+                      <xsl:when test="contains(concat(' ', normalize-space(@class), ' '), ' width-1:2 ')">
+                          <xsl:attribute name="class"><xsl:if test="position() = 1">first </xsl:if>column width2<xsl:if test="starts-with(@id, 'portal-column-')"> stroke</xsl:if></xsl:attribute>
+                      </xsl:when>
+                      <xsl:when test="contains(concat(' ', normalize-space(@class), ' '), ' width-3:4 ')">
+                          <xsl:attribute name="class"><xsl:if test="position() = 1">first </xsl:if>column width3<xsl:if test="starts-with(@id, 'portal-column-')"> stroke</xsl:if></xsl:attribute>
+                      </xsl:when>
+                      <xsl:otherwise>
+                          <xsl:attribute name="class"><xsl:if test="position() = 1">first </xsl:if>column width4<xsl:if test="starts-with(@id, 'portal-column-')"> stroke</xsl:if></xsl:attribute>
+                      </xsl:otherwise>
+                  </xsl:choose>
+                  <xsl:apply-templates select="./*"/>
+              </div>
+          </xsl:for-each>
+      </div>      
+  </replace>
+
+</rules>
